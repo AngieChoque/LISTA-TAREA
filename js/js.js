@@ -1,5 +1,6 @@
 let title_task = document.getElementById("title-task");
 let description_task = document.getElementById("description-task");
+let datetime_task = document.getElementById("datetime-task");
 let list_container = document.getElementById("list-container");
 let save_btn = document.getElementById("save-btn");
 let task_detail_dialog = document.getElementById("task-detail-dialog");
@@ -19,6 +20,7 @@ const set_data_localstorage = () => {
       id: tasks.length + 1,
       title: title_task.value,
       description: description_task.value,
+      datetime:datetime_task.value,
       complete: false,
     };
     tasks.push(data);
@@ -83,9 +85,8 @@ const view_data = (id_detail) => {
       "beforeend",
       `
         <div class="task-detail__title">${res.title}</div>
-        <p class="task-detail__description">
-          ${res.description}
-        </p>
+        <p class="task-detail__description"> ${res.description}</p>
+        <p class="task-detail__datetime"> ${res.datetime}<p/>
         <div class="task-detail__complete">completo : ${
           res.complete ? "SI" : "NO"
         }</div>
@@ -110,6 +111,7 @@ const generate_form = (id_edit) => {
           type="text"
           placeholder="Descripción de la tarea"
         >${res.description}</textarea>
+        <input id="datetime-task-edit" type="datetime-local" placeholder="Fecha Limite" value="${res.datetime}"/>
         <button id="save-btn-edit">Guardar</button>
         </div>
       
@@ -119,14 +121,17 @@ const generate_form = (id_edit) => {
     save_btn_edit.addEventListener("click", () => {
       let title_task_edit = document.getElementById("title-task-edit");
       let description_task_edit = document.getElementById(
-        "description-task-edit"
-      );
+        "description-task-edit");
+      let datetime_task_edit = document.getElementById("datetime-task-edit");
+
+      
       if (title_task_edit.value && description_task_edit.value) {
         let index_res = tasks.findIndex((e) => e.id == res.id);
         tasks[index_res] = {
           id: res.id,
           title: title_task_edit.value,
           description: description_task_edit.value,
+          datetime:datetime_task_edit.value,
           complete: res.complete,
         };
         localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -164,4 +169,71 @@ list_container.addEventListener("click", (event) => {
     delete_data_by_id(event.target.id);
   }
 });
+close_dialog.addEventListener("click", () => {
+  task_detail_dialog.close();
+});
+print_tasks();
+
+ //Buscador de contenido
+
+
+
+//Declarando variables
+bars_search =       document.getElementById("ctn-bars-search");
+cover_ctn_search =  document.getElementById("cover-ctn-search");
+inputSearch =       document.getElementById("inputSearch");
+box_search =        document.getElementById("box-search");
+
+
+//Funcion para mostrar el buscador
+function mostrar_buscador(){
+
+    bars_search.style.top = "80px";
+    cover_ctn_search.style.display = "block";
+    inputSearch.focus();
+
+    if (inputSearch.value === ""){
+        box_search.style.display = "none";
+    }
+
+}
+
+
+
+
+//Creando filtrado de busqueda
+
+document.getElementById("inputSearch").addEventListener("keyup", buscador_interno);
+
+function buscador_interno(){
+
+
+    filter = inputSearch.value.toUpperCase();
+    li = box_search.getElementsByTagName("li");
+
+    //Recorriendo elementos a filtrar mediante los "li"
+    for (i = 0; i < li.length; i++){
+
+        a = li[i].getElementsByTagName("a")[0];
+        textValue = a.textContent || a.innerText;
+
+        if(textValue.toUpperCase().indexOf(filter) > -1){
+
+            li[i].style.display = "";
+            box_search.style.display = "block";
+
+            if (inputSearch.value === ""){
+                box_search.style.display = "none";
+            }
+
+        }else{
+            li[i].style.display = "none";
+        }
+
+    }
+
+
+
+}
+
 

@@ -4,20 +4,25 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TO DO LIST</title>
+    <title>TAREAS</title>
     <link rel="stylesheet" href="css/estilos.css" />
   </head>
   <body>
     <div class="main-container">
+      <div id="ctn-bars-search">
+        <input type="text" id="inputSearch" placeholder="Buscar">
+    </div>
       <div class="new-task">
         <h1>Nueva Tarea</h1>
-        <input id="title-task" type="text" placeholder="Título de la tarea" />
-        <textarea
+        <input id="title-task" type="text" placeholder="Título de la tarea" /><textarea
           id="description-task"
           type="text"
           placeholder="Descripción de la tarea"
         ></textarea>
-        <button id="save-btn">Guardar</button>
+        <input id="datetime-task" type="datetime-local" placeholder="Fecha Limite"/>
+        <ul id="box-search">
+      </ul>
+         <button id="save-btn">Guardar</button>
       </div>
       <div class="list-tasks">
         <div class="title-list">
@@ -34,7 +39,10 @@
         </div>
       </div>
     </dialog>
+  
+  
     <script src="js/js.js"></script>
   </body>
 </html>
+
 
